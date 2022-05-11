@@ -1,14 +1,31 @@
+# fly.toml file generated for yb on 2022-05-11T20:57:15Z
+
 app = "yb"
+
 kill_signal = "SIGINT"
 kill_timeout = 60
+
+[deploy]
+  strategy = "rolling"
+
+[mount]
+  destination = "/data"
+  source = "data"
+
 [[services]]
-  internal_port = 8080
+  internal_port = 7000
   protocol = "tcp"
   script_checks = []
+
   [[services.ports]]
     force_https = false
     handlers = ["http"]
     port = 80
-[mount]
-source="data"
-destination="/data"
+
+[[services]]
+  internal_port = 5433
+  protocol = "tcp"
+  script_checks = []
+
+  [[services.ports]]
+    port = 5433
